@@ -11,14 +11,15 @@ const register = async (req, res) => {
     }
     const { firstName, lastName, email, phoneNumber } = req.body;
 
-    let newUser = await User.find({
+    const findUser = await User.find({
       email: email,
       phoneNumber: phoneNumber,
     });
-    if (newUser) {
+
+    if (findUser.length > 0) {
       res.status(500).json({ error: "User already exist" });
     }
-    newUser = new User({
+    const newUser = new User({
       firstName,
       lastName,
       email,
